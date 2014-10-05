@@ -1,9 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 /**
  * Created by slawek on 02/10/14.
@@ -74,11 +71,6 @@ public class BetterCollectionObjectAdapter<T> implements BetterCollection<T>{
     }
 
     @Override
-    public boolean removeIf(Predicate<? super T> filter) {
-        return adaptee.removeIf(filter);
-    }
-
-    @Override
     public boolean retainAll(Collection<?> c) {
         return adaptee.removeAll(c);
     }
@@ -87,20 +79,5 @@ public class BetterCollectionObjectAdapter<T> implements BetterCollection<T>{
     public void clear() {
         adaptee.clear();
 
-    }
-
-    @Override
-    public Spliterator<T> spliterator() {
-        return adaptee.spliterator();
-    }
-
-    @Override
-    public Stream<T> stream() {
-        return adaptee.stream();
-    }
-
-    @Override
-    public Stream<T> parallelStream() {
-        return adaptee.parallelStream();
     }
 }
