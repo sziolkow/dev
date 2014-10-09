@@ -31,7 +31,7 @@ List<Article> articles = new ArrayList<Article>();
 if (user != null){
     url = userService.createLogoutURL(request.getRequestURI());
     urlLinktext = "Logout";
-    articles = dao.getArticles();
+    articles = dao.getArticles(user.getUserId());
 }
     
 %>

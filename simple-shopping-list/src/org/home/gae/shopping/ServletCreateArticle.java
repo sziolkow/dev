@@ -26,7 +26,7 @@ public class ServletCreateArticle extends HttpServlet {
     String name = checkNull(req.getParameter("name"));
     Integer amount = new Integer(checkNull(req.getParameter("amount")));
 
-    Dao.INSTANCE.add(name, amount);
+    Dao.INSTANCE.add(user.getUserId(), name, amount);
 
     resp.sendRedirect("/ShoppingApplication.jsp");
   }

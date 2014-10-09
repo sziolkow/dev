@@ -11,13 +11,23 @@ public class Article {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String user;
 	private String name;
 	private int amount;
 	
-	public Article(String name, int amount) {
+	public Article(String user, String name, int amount) {
 		super();
+		this.user = user;
 		this.name = name;
 		this.amount = amount;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public Long getId() {

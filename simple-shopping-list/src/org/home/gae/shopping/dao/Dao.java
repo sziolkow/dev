@@ -18,20 +18,20 @@ public enum Dao {
     return articles;
   }
 
-  public void add(String name, int amount) {
+  public void add(String user, String name, int amount) {
     synchronized (this) {
       EntityManager em = EMFService.get().createEntityManager();
-      Article article = new Article(name, amount);
+      Article article = new Article(user, name, amount);
       em.persist(article);
       em.close();
     }
   }
 
-  public List<Article> getArticles() {
+  public List<Article> getArticles(String userId) {
     EntityManager em = EMFService.get().createEntityManager();
     Query q = em
-        .createQuery("select t from Article t ");
-    //q.setParameter("name", name);
+        .createQuery("select t from Article t where t.user = :userId");
+    q.setParameter("userId", userId);
     List<Article> articles = q.getResultList();
     return articles;
   }
