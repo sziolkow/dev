@@ -15,7 +15,34 @@
   <head>
     <title>Articles</title>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
-      <meta charset="utf-8"> 
+      <meta charset="utf-8">
+            
+        <script type="text/javascript">
+            function validate()
+            {
+                var amount = document.getElementById("amount");
+                
+                alert(typeof amount);
+                alert(amount.value);
+                
+                if(typeof amount == "undefined") {
+                	alert("Amount is mandatory. Please enter a number.");
+                	return false;  				
+				}
+				
+                if (amount == null) {
+                	alert("Amount is mandatory. Please enter a number.")
+                	return false;
+                }
+                
+                if(isNaN(amount.value)){
+                    alert("Invalid amount. Please enter a number");
+                    return false;
+                }
+                return true;
+            };
+
+        </script>    
   </head>
   <body>
 <%
@@ -79,7 +106,7 @@ You have a total number of <%= articles.size() %>  Articles.
 
 <% if (user != null){ %> 
 
-<form action="/new" method="post" accept-charset="utf-8">
+<form action="/new" method="post" accept-charset="utf-8" onsubmit="return validate();">
   <table>
     <tr>
       <td><label for="summary">name</label></td>
