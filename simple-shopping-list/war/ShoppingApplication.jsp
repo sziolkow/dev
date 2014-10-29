@@ -21,24 +21,31 @@
             function validate()
             {
                 var amount = document.getElementById("amount");
-                
+                	x = parseInt("amount");
+                	
                 alert(typeof amount);
                 alert(amount.value);
-                
+                                            
                 if(typeof amount == "undefined") {
-                	alert("Amount is mandatory. Please enter a number.");
+                	alert("1. Amount is mandatory. Please enter a number.");
+                	return false;  				
+				}
+				                
+                if(isNaN(amount.value)){
+                    alert("2. Invalid amount. Please enter a number");
+                    return false;
+                }       
+                
+                if(amount.value === "") {
+                	alert("3. Amount is mandatory. Please enter a number.");
                 	return false;  				
 				}
 				
-                if (amount == null) {
-                	alert("Amount is mandatory. Please enter a number.")
-                	return false;
+				if(amount.value < 0 || amount.value > 99) {
+					alert("4. Enter a number between 0-99.");
+					return false;	
                 }
                 
-                if(isNaN(amount.value)){
-                    alert("Invalid amount. Please enter a number");
-                    return false;
-                }
                 return true;
             };
 
