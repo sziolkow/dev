@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.home.gae.common.ShoppingUtil;
 import org.home.gae.shopping.dao.Dao;
 
 import com.google.appengine.api.users.User;
@@ -24,11 +25,12 @@ public class ServletCreateArticle extends HttpServlet {
     }
 
     String name = checkNull(req.getParameter("name"));
-    Integer amount = new Integer(checkNull(req.getParameter("amount")));
-
-    Dao.INSTANCE.add(user.getUserId(), name, amount);
-
+    String amount = checkNull(req.getParameter("amount"));
+    if (ShoppingUtil.isNumber(amount)) {
+       Dao.INSTANCE.add(user.getUserId(), name, new Integer(amount));
+    }
     resp.sendRedirect("/ShoppingApplication.jsp");
+    // TODO if not true then redirect to the other part
   }
 
   private String checkNull(String s) {
