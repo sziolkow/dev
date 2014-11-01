@@ -15,7 +15,6 @@
   <head>
     <title>Articles</title>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
-<<<<<<< HEAD
       <meta charset="utf-8"> 
 
         <script type="text/javascript">
@@ -46,44 +45,6 @@
             };
 
         </script>      
-      
-=======
-      <meta charset="utf-8">
-            
-        <script type="text/javascript">
-            function validate()
-            {
-                var amount = document.getElementById("amount");
-                	x = parseInt("amount");
-                	
-                alert(typeof amount);
-                alert(amount.value);
-                                            
-                if(typeof amount == "undefined") {
-                	alert("1. Amount is mandatory. Please enter a number.");
-                	return false;  				
-				}
-				                
-                if(isNaN(amount.value)){
-                    alert("2. Invalid amount. Please enter a number");
-                    return false;
-                }       
-                
-                if(amount.value === "") {
-                	alert("3. Amount is mandatory. Please enter a number.");
-                	return false;  				
-				}
-				
-				if(amount.value < 0 || amount.value > 99) {
-					alert("4. Enter a number between 0-99.");
-					return false;	
-                }
-                
-                return true;
-            };
-
-        </script>    
->>>>>>> afb5ba987d0a873a275a190890adbb14f274e4c4
   </head>
   <body>
 <%
