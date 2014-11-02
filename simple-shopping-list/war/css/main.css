@@ -57,6 +57,11 @@ table tr {
   vertical-align: top;
 }
 
+.list {
+	width: 70%;
+    float: center;
+}
+
 form td {
   font-size: smaller;
 } 

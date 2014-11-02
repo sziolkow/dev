@@ -78,10 +78,11 @@ if (user != null){
     </div>
   </div>
 
-<div style="clear: both;"/>  
+
 You have a total number of <%= articles.size() %>  Articles.
 
-<table>
+<div class="list"/>  
+<table width = "100%">
   <tr>
       <th>Name</th>
       <th>Amount</th>
@@ -103,9 +104,9 @@ You have a total number of <%= articles.size() %>  Articles.
 <%}
 %>
 </table>
+</div>
 
 
-<hr />
 
 <div class="main">
 
