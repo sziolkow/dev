@@ -36,6 +36,11 @@
 					alert("Amount can't be empty. Please enter a number.");
 					return false;
 				}
+				
+				if ((amount.value<1) || (amount.value>99)) {
+				    alert("Invalid amount. Please provide a number between 1 and 99.");
+					return false;
+				}
                 
                 if(isNaN(amount.value)){
                     alert("Invalid amount. Please enter a number");
