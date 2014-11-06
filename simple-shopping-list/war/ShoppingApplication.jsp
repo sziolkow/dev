@@ -12,11 +12,27 @@
 <%@page import="java.util.ArrayList"%>
 
 <html>
-  <head>
-    <title>Articles</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
-      <meta charset="utf-8"> 
+  <head>  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Shopping list">
+    <meta name="author" content="Rafal Wdowiak">
+    <link rel="icon" href="../../favicon.ico">
 
+    <title>Shopping list</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="theme.css" rel="stylesheet">
+
+    <!--
+    <link href="css/main.css" rel="stylesheet">
+    -->
         <script type="text/javascript">
 			
 			String.prototype.trim = function() {
@@ -48,93 +64,105 @@
                 }
                 return true;
             };
-
         </script>      
   </head>
-  <body>
-<%
-Dao dao = Dao.INSTANCE;
+  <body role="document">
 
-UserService userService = UserServiceFactory.getUserService();
-User user = userService.getCurrentUser();
+  <%
+	Dao dao = Dao.INSTANCE;
+	
+	UserService userService = UserServiceFactory.getUserService();
+	User user = userService.getCurrentUser();
+	
+	String url = userService.createLoginURL(request.getRequestURI());
+	String urlLinktext = "Login";
+	List<Article> articles = new ArrayList<Article>();
+	            
+	if (user != null){
+	    url = userService.createLogoutURL(request.getRequestURI());
+	    urlLinktext = "Logout";
+	    articles = dao.getArticles(user.getUserId());
+	}
+	    
+   %>
 
-String url = userService.createLoginURL(request.getRequestURI());
-String urlLinktext = "Login";
-List<Article> articles = new ArrayList<Article>();
-            
-if (user != null){
-    url = userService.createLogoutURL(request.getRequestURI());
-    urlLinktext = "Logout";
-    articles = dao.getArticles(user.getUserId());
-}
-    
-%>
-  <div style="width: 100%;">
-    <div class="line"></div>
-    <div class="topLine">
-      <div style="float: left;"><img src="images/todo.png" /></div>
-      <div style="float: left;" class="headline">Articles</div>
-      <div style="float: right;"><a href="<%=url%>"><%=urlLinktext%></a> <%=(user==null? "" : user.getNickname())%></div>
+  
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Shopping List</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li>
+               <a href="<%=url%>"><%=urlLinktext%> <%=(user==null? "" : user.getNickname())%></a>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    </br></br></br>
+      
+
+<div class="container theme-showcase" role="main">
+    <% if (user != null){ %>
+	<div class="jumbotron">
+	        <h1>Hello, <%=user%></h1>
+	        <p>Please add some articles to your shopping list. The ordered articles will be delivered to you so soon as possible!</p>
+        	<p>You have a total number of <%= articles.size() %>  articles. </p>	
+	</div>	
+    <div class="page-header">
+        <h1>Ordered articles</h1>
     </div>
-  </div>
+    <div class="row">
+    <div class="col-md-6">
+	        <table class="table table-striped">
+	        <tr>
+	          <th>Name</th>
+	          <th>Amount</th>
+	          <th>&nbsp;</th>
+	        </tr>
+	  		<% for (Article article : articles) {%>
+				<tr> 
+					<td><%=article.getName()%></td>
+					<td><%=article.getAmount()%></td>
+					<td><a class="done" href="/done?id=<%=article.getId()%>" >Delete</a></td>
+				</tr> 
+			<%}%>
+	        </table>
+	</div>       
+	</div>
+    <div class="page-header">
+        <h1>Add a new article</h1>
+    </div>
+    
+	<div class="container">
 
+      <form class="form-signin" role="form" action="/new" method="post" accept-charset="utf-8" onsubmit="return validate();">
+        <input type="text" class="form-control" placeholder="Enter a article name" required name="name" id="name">
+        <input type="text" class="form-control" placeholder="Enter a amount of articles" required name="amount" id="amount" size=3>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+      </form>
+      </br></br></br>
 
-You have a total number of <%= articles.size() %>  Articles.
+    </div> <!-- /container -->
+	
+	
+	<% }else{ %>
+	<p> Please login with your Google account</p>
+	
+	<% } %>    
+</div>  
 
-<div class="list"/>  
-<table width = "100%">
-  <tr>
-      <th>Name</th>
-      <th>Amount</th>
-    </tr>
-
-<% for (Article article : articles) {%>
-<tr> 
-<td>
-<%=article.getName()%>
-</td>
-<td>
-<%=article.getAmount()%>
-</td>
-
-<td>
-<a class="done" href="/done?id=<%=article.getId()%>" >Delete</a>
-</td>
-</tr> 
-<%}
-%>
-</table>
-</div>
-
-
-
-<div class="main">
-
-<div class="headline">New article</div>
-
-<% if (user != null){ %> 
-
-<form action="/new" method="post" accept-charset="utf-8" onsubmit="return validate();">
-  <table>
-    <tr>
-      <td><label for="summary">name</label></td>
-      <td><input type="text" name="name" id="name" size="65"/></td>
-    </tr>
-  <tr>
-    <td valign="top"><label for="url">Amount</label></td>
-    <td><input type="amount" name="amount" id="amount" size="65" /></td>
-  </tr>
-  <tr>
-      <td colspan="2" align="right"><input type="submit" value="Add"/></td>
-    </tr>
-  </table>
-</form>
-
-<% }else{ %>
-
-Please login with your Google account
-
-<% } %>
-</div>
 </body>
 </html> 
