@@ -83,6 +83,7 @@
 	    urlLinktext = "Logout";
 	    articles = dao.getArticles(user.getUserId());
 	}
+	String error = (String)request.getAttribute("error_");
 	    
    %>
 
@@ -114,13 +115,18 @@
     </br></br></br>
       
 
-<div class="container theme-showcase" role="main">
+  <div class="container theme-showcase" role="main">
     <% if (user != null){ %>
 	<div class="jumbotron">
 	        <h1>Hello, <%=user%></h1>
 	        <p>Please add some articles to your shopping list. The ordered articles will be delivered to you so soon as possible!</p>
         	<p>You have a total number of <%= articles.size() %>  articles. </p>	
-	</div>	
+	</div>
+    <% if (error != null){ %>	
+		<div class="alert alert-danger" role="alert">
+	        <strong><%=error%></strong>
+	    </div>
+    <%}%>
     <div class="page-header">
         <h1>Ordered articles</h1>
     </div>
@@ -150,7 +156,7 @@
 
       <form class="form-signin" role="form" action="/new" method="post" accept-charset="utf-8" onsubmit="return validate();">
         <input type="text" class="form-control" placeholder="Enter a article name" required name="name" id="name">
-        <input type="text" class="form-control" placeholder="Enter a amount of articles" required name="amount" id="amount" size=3>
+        <input type="text" class="form-control" placeholder="Enter a amount of articles" required name="amount" id="amount" size=3>    
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
       </form>
       </br></br></br>
@@ -161,7 +167,8 @@
 	<% }else{ %>
 	<p> Please login with your Google account</p>
 	
-	<% } %>    
+	<% } %>  
+	
 </div>  
 
 </body>

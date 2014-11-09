@@ -9,9 +9,20 @@ public static boolean isNumber(String potenialNumber) {
 		return true;
 	} catch(NumberFormatException ex) {
 		//TODO loging
-		throw ex;
+		return false;
 	}
-	//return false;
 }
+
+public static boolean checkIfEmptyOrNull(String s) {
+    if (s == null) {
+       return true;
+    }
+    
+    if (s.trim().length()==0) {
+       return true;
+    }
+    
+    return false;
+  }
 
 }
