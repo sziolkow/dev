@@ -16,7 +16,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Shopping list">
+    <meta name="description" content="Lista zakupow">
     <meta name="author" content="Rafal Wdowiak">
     <link rel="icon" href="../../favicon.ico">
 
@@ -44,22 +44,22 @@
                 var amount = document.getElementById("amount");
              	
                 if (amount == null) {
-                	alert("Amount is mandatory. Please enter a number.")
+                	alert("Ilosc jest obowiazakowa. Wprowadz interesujaca cie ilosc.")
                 	return false;
                 }
 				
 				if (amount.value.trim() == "") {
-					alert("Amount can't be empty. Please enter a number.");
+					alert("Ilosc nie moze byc pusta. Wprowadz interesujaca Cie liczbe.");
 					return false;
 				}
 				
 				if ((amount.value<1) || (amount.value>99)) {
-				    alert("Invalid amount. Please provide a number between 1 and 99.");
+				    alert("Nieprawidlowa ilosc. Podaj ilosc pomiedzy 1 a 99.");
 					return false;
 				}
                 
                 if(isNaN(amount.value)){
-                    alert("Invalid amount. Please enter a number");
+                    alert("Nieprawidlowa ilosc. Wprowadz liczbe.");
                     return false;
                 }
                 return true;
@@ -75,12 +75,12 @@
 	User user = userService.getCurrentUser();
 	
 	String url = userService.createLoginURL(request.getRequestURI());
-	String urlLinktext = "Login";
+	String urlLinktext = "Zaloguj";
 	List<Article> articles = new ArrayList<Article>();
 	            
 	if (user != null){
 	    url = userService.createLogoutURL(request.getRequestURI());
-	    urlLinktext = "Logout";
+	    urlLinktext = "Wyloguj";
 	    articles = dao.getArticles(user.getUserId());
 	}
 	String error = (String)request.getAttribute("error_");
@@ -89,7 +89,7 @@
 
   
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -98,13 +98,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Shopping List</a>
+          <a class="navbar-brand" href="#">Lista praca</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="active"><a href="#">Strona domowa</a></li>
+            <li><a href="about.html">O aplikacji</a></li>
+            <li><a href="contact.html">Kontakt</a></li>
             <li>
                <a href="<%=url%>"><%=urlLinktext%> <%=(user==null? "" : user.getNickname())%></a>
             </li>
@@ -117,25 +117,48 @@
 
   <div class="container theme-showcase" role="main">
     <% if (user != null){ %>
-	<div class="jumbotron">
-	        <h1>Hello, <%=user%></h1>
-	        <p>Please add some articles to your shopping list. The ordered articles will be delivered to you so soon as possible!</p>
-        	<p>You have a total number of <%= articles.size() %>  articles. </p>	
+	<div class="page-header" >
+	        <h4>Witaj, <%=user%></h4>
+	        <p><h5>Tutaj nalezy dodac artykuly ktore potrzebujesz do pracy!</h5></p>
+	        <p><h5>Dostarczymy je najszybciej jak to mozliwe.</h5></p>
+        	<p><h5>Liczba zamowionych artykulow : <%= articles.size() %>  </h5></p>	
 	</div>
+	
     <% if (error != null){ %>	
 		<div class="alert alert-danger" role="alert">
 	        <strong><%=error%></strong>
 	    </div>
     <%}%>
+   
     <div class="page-header">
-        <h1>Ordered articles</h1>
+    <h4>Dodaj towar</h4>
+    </div>
+    
+	<div class="container">
+ 	<div class="col-md-6">
+      <form class="form-signin" role="form" action="/new" method="post" accept-charset="utf-8" onsubmit="return validate();">
+        <input type="text" class="form-control" placeholder="Wprowadz nazwe artykulu" required name="name" id="name">
+        <input type="text" class="form-control" placeholder="Wprowadz potrzebna ilosc" required name="amount" id="amount" size=3>  
+        <p></p>  
+        <button class="btn btn-xs btn-success btn-block" type="submit">Dodaj</button>
+      </form>
+    </div>
+    </div>
+    
+    <div>
+    <h3> </h3>
+    </div>
+    
+    <div class="page-header">
+    	<h4>Zamowione artykuly:</h4>
     </div>
     <div class="row">
+    <div class="container">
     <div class="col-md-6">
-	        <table class="table table-striped">
+	        <table class="table table-striped"">
 	        <tr>
-	          <th>Name</th>
-	          <th>Amount</th>
+	          <th>Nazwa</th>
+	          <th>Ilosc</th>
 	          <th>&nbsp;</th>
 	        </tr>
 	  		<% for (Article article : articles) {%>
@@ -148,24 +171,14 @@
 	        </table>
 	</div>       
 	</div>
-    <div class="page-header">
-        <h1>Add a new article</h1>
-    </div>
-    
-	<div class="container">
-
-      <form class="form-signin" role="form" action="/new" method="post" accept-charset="utf-8" onsubmit="return validate();">
-        <input type="text" class="form-control" placeholder="Enter a article name" required name="name" id="name">
-        <input type="text" class="form-control" placeholder="Enter a amount of articles" required name="amount" id="amount" size=3>    
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
-      </form>
-      </br></br></br>
-
-    </div> <!-- /container -->
+	</div>
 	
+	<div class="row"></div>
+	
+	</div> <!-- /container -->
 	
 	<% }else{ %>
-	<p> Please login with your Google account</p>
+	<p> Aby skorzystac z aplikacji zaloguj sie przy pomocy konta Google </p>
 	
 	<% } %>  
 	
