@@ -6,23 +6,27 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   version="2.5">
   <servlet>
     <servlet-name>CreateNewTodo</servlet-name>
-    <servlet-class>org.home.gae.shopping.ServletCreateArticle</servlet-class>
+    <servlet-class>org.home.gae.shopping.controlers.ServletCreateArticle</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CreateNewTodo</servlet-name>
     <url-pattern>/new</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>RemoveArticle</servlet-name>
-    <servlet-class>org.home.gae.shopping.ServletDeleteArticle</servlet-class>
+    <servlet-class>org.home.gae.shopping.controlers.ServletDeleteArticle</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RemoveArticle</servlet-name>
     <url-pattern>/done</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <servlet-name>controlServlet</servlet-name>
+    <servlet-class>org.home.gae.shopping.controlers.ControlServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+   </servlet>
   <welcome-file-list>
-    <welcome-file>ShoppingApplication.jsp</welcome-file>
+    <welcome-file>controlServlet</welcome-file>
   </welcome-file-list>
   <error-page>  
     <exception-type>java.lang.Throwable</exception-type>  

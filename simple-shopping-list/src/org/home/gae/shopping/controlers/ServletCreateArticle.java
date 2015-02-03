@@ -1,4 +1,4 @@
-package org.home.gae.shopping;
+package org.home.gae.shopping.controlers;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.home.gae.common.ShoppingUtil;
-import org.home.gae.shopping.dao.Dao;
+import org.home.gae.shopping.business.ArticleManagementService;
+import org.home.gae.shopping.persistence.Dao;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -24,15 +24,17 @@ public class ServletCreateArticle extends HttpServlet {
       throws IOException, ServletException {
     System.out.println("Creating new article ");
     User user = (User) req.getAttribute("user");
+   
     if (user == null) {
       UserService userService = UserServiceFactory.getUserService();
       user = userService.getCurrentUser();
     }
     
     if (checkIfInputDataAreValid(req, req.getParameter("name"), req.getParameter("amount"))) {
-    	Dao.INSTANCE.add(user.getUserId(), 
-    			req.getParameter("name"), 
-    			new Integer(req.getParameter("amount")));
+    	ArticleManagementService articleManagementService = new ArticleManagementService();
+    	articleManagementService.addArticle(user.getUserId(), 
+    			                            req.getParameter("name"), 
+    			                            req.getParameter("amount"));
     	resp.sendRedirect("/ShoppingApplication.jsp");
     } else {
     	req.getRequestDispatcher("/ShoppingApplication.jsp").forward(req, resp);
@@ -59,4 +61,3 @@ public class ServletCreateArticle extends HttpServlet {
 	}
 
 }
-

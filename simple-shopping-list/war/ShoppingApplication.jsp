@@ -4,7 +4,7 @@
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <%@ page import="org.home.gae.shopping.model.Article" %>
-<%@ page import="org.home.gae.shopping.dao.Dao" %>
+<%@ page import="org.home.gae.shopping.persistence.Dao" %>
 
 <!DOCTYPE html>
 
@@ -77,11 +77,16 @@
 	String url = userService.createLoginURL(request.getRequestURI());
 	String urlLinktext = "Login";
 	List<Article> articles = new ArrayList<Article>();
-	            
+	boolean isAdmin = false;            
 	if (user != null){
 	    url = userService.createLogoutURL(request.getRequestURI());
 	    urlLinktext = "Logout";
 	    articles = dao.getArticles(user.getUserId());
+	    ServletContext context = request.getSession().getServletContext();
+	    String attribute =(String)context.getAttribute("admin");
+	    if((attribute != null) && (attribute.equals(user.getUserId()))) {
+	    	isAdmin = true;
+	    }
 	}
 	String error = (String)request.getAttribute("error_");
 	    
@@ -162,8 +167,11 @@
       </br></br></br>
 
     </div> <!-- /container -->
-	
-	
+	<% if (isAdmin) { %>
+		<div class="page-header">
+	        <h1>i'm Admin</h1>
+	    </div>
+	<% } %>      
 	<% }else{ %>
 	<p> Please login with your Google account</p>
 	

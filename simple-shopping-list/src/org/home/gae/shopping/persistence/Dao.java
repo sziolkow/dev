@@ -1,4 +1,4 @@
-package org.home.gae.shopping.dao;
+package org.home.gae.shopping.persistence;
 
 import java.util.List;
 

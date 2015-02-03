@@ -1,4 +1,4 @@
-package org.home.gae.shopping.dao;
+package org.home.gae.shopping.persistence;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
