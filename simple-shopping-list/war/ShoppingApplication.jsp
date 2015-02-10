@@ -4,7 +4,7 @@
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <%@ page import="org.home.gae.shopping.model.Article" %>
-<%@ page import="org.home.gae.shopping.dao.Dao" %>
+<%@ page import="org.home.gae.shopping.persistence.Dao" %>
 
 <!DOCTYPE html>
 
@@ -70,6 +70,7 @@
 
   <%
 	Dao dao = Dao.INSTANCE;
+	boolean isAdmin = false;
 	
 	UserService userService = UserServiceFactory.getUserService();
 	User user = userService.getCurrentUser();
