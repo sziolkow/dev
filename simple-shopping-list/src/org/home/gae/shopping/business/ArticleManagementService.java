@@ -1,20 +1,25 @@
 package org.home.gae.shopping.business;
 
-import org.home.gae.shopping.persistence.Dao;
+import java.util.List;
+
+import org.home.gae.shopping.model.Article;
+import org.home.gae.shopping.persistence.ArticleDao;
+import org.home.gae.shopping.persistence.ArticleDaoImpl;
 
 public class ArticleManagementService {
 	
 	public void addArticle(String userId, String articleName, String amount) {
-    	Dao.INSTANCE.add(userId, 
-    			         articleName, 
-    			         new Integer(amount));
+		ArticleDao articleDao = new ArticleDaoImpl();
+		articleDao.add(userId, articleName, new Integer(amount));
 	}
 
 	public void deleteArticle(String id) {
-		Dao.INSTANCE.remove(Long.parseLong(id));	
+		ArticleDao articleDao = new ArticleDaoImpl();
+		articleDao.remove(Long.parseLong(id));	
 	}
 	
-	public void loadArticlesForUser(String userId) {
-		
+	public List<Article> getArticles(String userId) {
+		ArticleDao articleDao = new ArticleDaoImpl();
+		return articleDao.getArticles(userId);
 	}
 }

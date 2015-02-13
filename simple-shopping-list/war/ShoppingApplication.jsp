@@ -4,7 +4,7 @@
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <%@ page import="org.home.gae.shopping.model.Article" %>
-<%@ page import="org.home.gae.shopping.persistence.Dao" %>
+<%@ page import="org.home.gae.shopping.business.ArticleManagementService" %>
 
 <!DOCTYPE html>
 
@@ -69,7 +69,7 @@
   <body role="document">
 
   <%
-	Dao dao = Dao.INSTANCE;
+  	ArticleManagementService service = new ArticleManagementService();
 	boolean isAdmin = false;
 	
 	UserService userService = UserServiceFactory.getUserService();
@@ -82,7 +82,7 @@
 	if (user != null){
 	    url = userService.createLogoutURL(request.getRequestURI());
 	    urlLinktext = "Wyloguj";
-	    articles = dao.getArticles(user.getUserId());
+	    articles = service.getArticles(user.getUserId());
 	    ServletContext context = request.getSession().getServletContext();
 	    String attribute =(String)context.getAttribute("admin");
 	    if((attribute != null) && (attribute.equals(user.getUserId()))) {

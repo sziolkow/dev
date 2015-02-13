@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.home.gae.shopping.business.ArticleManagementService;
-import org.home.gae.shopping.persistence.Dao;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;

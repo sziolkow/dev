@@ -7,9 +7,9 @@ import javax.persistence.Query;
 
 import org.home.gae.shopping.model.Article;
 
-public enum Dao {
-  INSTANCE;
-
+public class ArticleDaoImpl implements ArticleDao{
+ 
+  @Override
   public List<Article> listArticles() {
     EntityManager em = EMFService.get().createEntityManager();
     // read the existing entries
@@ -18,6 +18,7 @@ public enum Dao {
     return articles;
   }
 
+  @Override
   public void add(String user, String name, int amount) {
     synchronized (this) {
       EntityManager em = EMFService.get().createEntityManager();
@@ -27,6 +28,7 @@ public enum Dao {
     }
   }
 
+  @Override
   public List<Article> getArticles(String userId) {
     EntityManager em = EMFService.get().createEntityManager();
     Query q = em
@@ -36,6 +38,7 @@ public enum Dao {
     return articles;
   }
 
+  @Override
   public void remove(long id) {
     EntityManager em = EMFService.get().createEntityManager();
     try {

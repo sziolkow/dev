@@ -27,7 +27,7 @@ public class ControlServlet extends HttpServlet {
     
     if(user != null) {
     	ArticleManagementService ams = new ArticleManagementService();
-    	ams.loadArticlesForUser(user.getUserId());
+    	ams.getArticles(user.getUserId());
     }
     
     req.getRequestDispatcher("/ShoppingApplication.jsp").forward(req, resp);
