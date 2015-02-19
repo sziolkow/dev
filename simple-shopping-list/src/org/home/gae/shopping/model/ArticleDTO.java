@@ -1,26 +1,21 @@
 package org.home.gae.shopping.model;
 
-import javax.jdo.annotations.PersistenceAware;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
-public class Article {
+public class ArticleDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String user;
 	private String name;
 	private int amount;
 	
-	public Article(String user, String name, int amount) {
-		super();
+	public ArticleDTO(Long id, String user, String name, int amount) {
+		this.id = id;
 		this.user = user;
 		this.name = name;
 		this.amount = amount;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getUser() {

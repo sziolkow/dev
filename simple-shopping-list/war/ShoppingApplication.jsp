@@ -3,7 +3,7 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%@ page import="org.home.gae.shopping.model.Article" %>
+<%@ page import="org.home.gae.shopping.model.ArticleDTO" %>
 <%@ page import="org.home.gae.shopping.business.ArticleManagementService" %>
 
 <!DOCTYPE html>
@@ -18,6 +18,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Lista zakupow">
     <meta name="author" content="Rafal Wdowiak">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-store">
     <link rel="icon" href="../../favicon.ico">
 
     <title>Shopping list</title>
@@ -77,13 +79,13 @@
 	
 	String url = userService.createLoginURL(request.getRequestURI());
 	String urlLinktext = "Zaloguj";
-	List<Article> articles = new ArrayList<Article>();
+	List<ArticleDTO> articles = new ArrayList<ArticleDTO>();
 	            
 	if (user != null){
 	    url = userService.createLogoutURL(request.getRequestURI());
 	    urlLinktext = "Wyloguj";
 	    //articles = service.getArticles(user.getUserId());
-	    articles = (List<Article>)request.getAttribute("articles");
+	    articles = (List<ArticleDTO>)request.getAttribute("articles");
 	    ServletContext context = request.getSession().getServletContext();
 	    String attribute =(String)context.getAttribute("admin");
 	    if((attribute != null) && (attribute.equals(user.getUserId()))) {
@@ -168,7 +170,7 @@
 	          <th>Ilosc</th>
 	          <th>&nbsp;</th>
 	        </tr>
-	  		<% for (Article article : articles) {%>
+	  		<% for (ArticleDTO article : articles) {%>
 				<tr> 
 					<td><%=article.getName()%></td>
 					<td><%=article.getAmount()%></td>

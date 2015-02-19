@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.home.gae.shopping.business.ArticleManagementService;
 import org.home.gae.shopping.model.Article;
+import org.home.gae.shopping.model.ArticleDTO;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -30,7 +31,7 @@ public class ServletDeleteArticle extends HttpServlet {
 		String id = req.getParameter("id");
     	ArticleManagementService articleManagementService = new ArticleManagementService();
     	articleManagementService.deleteArticle(id);   	
-       	List<Article>articles = articleManagementService.getArticles(user.getUserId());
+       	List<ArticleDTO>articles = articleManagementService.getArticles(user.getUserId());
     	req.setAttribute("articles", articles);
     	req.getRequestDispatcher("/ShoppingApplication.jsp").forward(req, resp);	
 	}

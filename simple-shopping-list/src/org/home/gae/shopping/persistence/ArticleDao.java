@@ -8,7 +8,7 @@ public interface ArticleDao {
 	
 	List<Article> listArticles();
 
-    void add(String user, String name, int amount);
+    Article add(String user, String name, int amount);
 
     List<Article> getArticles(String userId);
     

@@ -1,5 +1,8 @@
 package org.home.gae.shopping.controlers;
 
+import static org.home.gae.common.ShoppingUtil.checkIfEmptyOrNull;
+import static org.home.gae.common.ShoppingUtil.isNumber;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -10,14 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.home.gae.shopping.business.ArticleManagementService;
-import org.home.gae.shopping.model.Article;
+import org.home.gae.shopping.model.ArticleDTO;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-
-import static org.home.gae.common.ShoppingUtil.isNumber;
-import static org.home.gae.common.ShoppingUtil.checkIfEmptyOrNull;
 
 @SuppressWarnings("serial")
 public class ServletCreateArticle extends HttpServlet {
@@ -34,12 +34,18 @@ public class ServletCreateArticle extends HttpServlet {
     
     if (checkIfInputDataAreValid(req, req.getParameter("name"), req.getParameter("amount"))) {
     	ArticleManagementService articleManagementService = new ArticleManagementService();
-    	articleManagementService.addArticle(user.getUserId(), 
+    	
+    	List<ArticleDTO>articles = articleManagementService.getArticles(user.getUserId());
+        System.out.println("Number of articles before adding a new one: " +articles.size() );
+        
+    	ArticleDTO newArticle = articleManagementService.addArticle(user.getUserId(), 
     			                            req.getParameter("name"), 
     			                            req.getParameter("amount"));
     	RequestDispatcher rd = req.getRequestDispatcher("/ShoppingApplication.jsp");
     	
-    	List<Article>articles = articleManagementService.getArticles(user.getUserId());
+    	articles.add(newArticle);
+        System.out.println("Number of articles after adding a new one: " +articles.size() );
+    	
     	req.setAttribute("articles", articles);
     	rd.forward(req, resp);
     } else {

@@ -19,11 +19,16 @@ public class ArticleDaoImpl implements ArticleDao{
   }
 
   @Override
-  public void add(String user, String name, int amount) {
-    synchronized (this) {
-      EntityManager em = EMFService.get().createEntityManager();
+  public Article add(String user, String name, int amount) {
+	EntityManager em = EMFService.get().createEntityManager();
+	try {  
+      em.getTransaction().begin();		
       Article article = new Article(user, name, amount);
       em.persist(article);
+      em.flush();      
+      em.getTransaction().commit();
+      return article;
+    } finally {
       em.close();
     }
   }
@@ -31,19 +36,24 @@ public class ArticleDaoImpl implements ArticleDao{
   @Override
   public List<Article> getArticles(String userId) {
     EntityManager em = EMFService.get().createEntityManager();
+    em.getTransaction().begin();	
     Query q = em
         .createQuery("select t from Article t where t.user = :userId");
     q.setParameter("userId", userId);
     List<Article> articles = q.getResultList();
+    em.getTransaction().commit();
+    em.close();
     return articles;
   }
 
   @Override
   public void remove(long id) {
     EntityManager em = EMFService.get().createEntityManager();
+    em.getTransaction().begin();
     try {
       Article article = em.find(Article.class, id);
       em.remove(article);
+      em.getTransaction().commit();
     } finally {
       em.close();
     }
