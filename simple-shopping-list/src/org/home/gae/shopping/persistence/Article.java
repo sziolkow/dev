@@ -1,6 +1,5 @@
-package org.home.gae.shopping.model;
+package org.home.gae.shopping.persistence;
 
-import javax.jdo.annotations.PersistenceAware;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

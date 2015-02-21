@@ -27,10 +27,11 @@ public class ControlServlet extends HttpServlet {
       user = userService.getCurrentUser();
     }
     
-    if(user != null) {
+    if(user != null && req.getSession().getAttribute("articles")==null) {
     	ArticleManagementService ams = new ArticleManagementService();
     	List<ArticleDTO>articles = ams.getArticles(user.getUserId());
-    	req.setAttribute("articles", articles);
+    	//req.setAttribute("articles", articles);
+    	req.getSession().setAttribute("articles",articles);
     }
     
     req.getRequestDispatcher("/ShoppingApplication.jsp").forward(req, resp);

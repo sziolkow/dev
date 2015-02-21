@@ -35,8 +35,9 @@ public class ServletCreateArticle extends HttpServlet {
     if (checkIfInputDataAreValid(req, req.getParameter("name"), req.getParameter("amount"))) {
     	ArticleManagementService articleManagementService = new ArticleManagementService();
     	
-    	List<ArticleDTO>articles = articleManagementService.getArticles(user.getUserId());
-        System.out.println("Number of articles before adding a new one: " +articles.size() );
+    	//List<ArticleDTO>articles = articleManagementService.getArticles(user.getUserId());
+    	List<ArticleDTO>articles = (List<ArticleDTO>)req.getSession().getAttribute("articles");        
+    	System.out.println("Number of articles before adding a new one: " +articles.size() );
         
     	ArticleDTO newArticle = articleManagementService.addArticle(user.getUserId(), 
     			                            req.getParameter("name"), 
@@ -45,8 +46,7 @@ public class ServletCreateArticle extends HttpServlet {
     	
     	articles.add(newArticle);
         System.out.println("Number of articles after adding a new one: " +articles.size() );
-    	
-    	req.setAttribute("articles", articles);
+    	req.getSession().setAttribute("articles",articles);
     	rd.forward(req, resp);
     } else {
     	req.getRequestDispatcher("/ShoppingApplication.jsp").forward(req, resp);

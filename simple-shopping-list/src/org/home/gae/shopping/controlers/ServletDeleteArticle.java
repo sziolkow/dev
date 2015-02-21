@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.home.gae.shopping.business.ArticleManagementService;
-import org.home.gae.shopping.model.Article;
 import org.home.gae.shopping.model.ArticleDTO;
 
 import com.google.appengine.api.users.User;
@@ -29,10 +28,20 @@ public class ServletDeleteArticle extends HttpServlet {
 	    }
 		
 		String id = req.getParameter("id");
-    	ArticleManagementService articleManagementService = new ArticleManagementService();
-    	articleManagementService.deleteArticle(id);   	
-       	List<ArticleDTO>articles = articleManagementService.getArticles(user.getUserId());
-    	req.setAttribute("articles", articles);
+    	List<ArticleDTO>articles = (List<ArticleDTO>)req.getSession().getAttribute("articles"); 
+    	ArticleManagementService articleManagementService = new ArticleManagementService();		
+    	articleManagementService.deleteArticle(id); 
+    	removeObsoleteArticleFromList(id, articles);
+    	req.getSession().setAttribute("articles",articles);
     	req.getRequestDispatcher("/ShoppingApplication.jsp").forward(req, resp);	
+	}
+
+	private void removeObsoleteArticleFromList(String id, List<ArticleDTO> articles) {
+		for (ArticleDTO currentArticle : articles) {
+			if (currentArticle.getId().equals(new Long(id))) {
+				articles.remove(currentArticle);
+				return;
+			}
+		}	
 	}
 }

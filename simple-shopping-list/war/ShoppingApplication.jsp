@@ -84,8 +84,7 @@
 	if (user != null){
 	    url = userService.createLogoutURL(request.getRequestURI());
 	    urlLinktext = "Wyloguj";
-	    //articles = service.getArticles(user.getUserId());
-	    articles = (List<ArticleDTO>)request.getAttribute("articles");
+	    articles = (List<ArticleDTO>)request.getSession().getAttribute("articles");
 	    ServletContext context = request.getSession().getServletContext();
 	    String attribute =(String)context.getAttribute("admin");
 	    if((attribute != null) && (attribute.equals(user.getUserId()))) {

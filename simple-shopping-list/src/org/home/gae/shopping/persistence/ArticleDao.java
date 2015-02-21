@@ -2,8 +2,6 @@ package org.home.gae.shopping.persistence;
 
 import java.util.List;
 
-import org.home.gae.shopping.model.Article;
-
 public interface ArticleDao {
 	
 	List<Article> listArticles();

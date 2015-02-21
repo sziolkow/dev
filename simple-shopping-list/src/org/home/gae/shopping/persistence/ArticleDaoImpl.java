@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.home.gae.shopping.model.Article;
-
 public class ArticleDaoImpl implements ArticleDao{
  
   @Override

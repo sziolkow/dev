@@ -3,8 +3,8 @@ package org.home.gae.shopping.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.home.gae.shopping.model.Article;
 import org.home.gae.shopping.model.ArticleDTO;
+import org.home.gae.shopping.persistence.Article;
 import org.home.gae.shopping.persistence.ArticleDao;
 import org.home.gae.shopping.persistence.ArticleDaoImpl;
 
