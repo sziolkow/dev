@@ -21,7 +21,7 @@ public class ArticleDaoImpl implements ArticleDao{
 	EntityManager em = EMFService.get().createEntityManager();
 	try {  
       em.getTransaction().begin();		
-      Article article = new Article(user, name, amount);
+      Article article = new Article(user, name, amount, "NEW");
       em.persist(article);
       em.flush();      
       em.getTransaction().commit();

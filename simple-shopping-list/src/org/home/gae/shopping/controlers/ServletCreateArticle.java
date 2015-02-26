@@ -35,13 +35,13 @@ public class ServletCreateArticle extends HttpServlet {
     if (checkIfInputDataAreValid(req, req.getParameter("name"), req.getParameter("amount"))) {
     	ArticleManagementService articleManagementService = new ArticleManagementService();
     	
-    	//List<ArticleDTO>articles = articleManagementService.getArticles(user.getUserId());
     	List<ArticleDTO>articles = (List<ArticleDTO>)req.getSession().getAttribute("articles");        
     	System.out.println("Number of articles before adding a new one: " +articles.size() );
         
-    	ArticleDTO newArticle = articleManagementService.addArticle(user.getUserId(), 
+    	ArticleDTO newArticle = articleManagementService.addArticle(user.getEmail(), 
     			                            req.getParameter("name"), 
     			                            req.getParameter("amount"));
+    	
     	RequestDispatcher rd = req.getRequestDispatcher("/ShoppingApplication.jsp");
     	
     	articles.add(newArticle);
@@ -71,5 +71,4 @@ public class ServletCreateArticle extends HttpServlet {
 		return true;
 
 	}
-
 }

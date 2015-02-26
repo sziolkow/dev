@@ -3,6 +3,7 @@ package org.home.gae.shopping.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.home.gae.common.Status;
 import org.home.gae.shopping.model.ArticleDTO;
 import org.home.gae.shopping.persistence.Article;
 import org.home.gae.shopping.persistence.ArticleDao;
@@ -16,7 +17,8 @@ public class ArticleManagementService {
 		return new ArticleDTO(newArticle.getId(), 
 				newArticle.getUser(), 
 				newArticle.getName(), 
-				newArticle.getAmount());
+				newArticle.getAmount(),
+				Status.NEW);
 	}
 
 	public void deleteArticle(String id) {
@@ -34,7 +36,8 @@ public class ArticleManagementService {
 		List<ArticleDTO> dtoList =  new ArrayList<ArticleDTO>();
 		for (Article entity : entityList) {
 			ArticleDTO newDto = new ArticleDTO(entity.getId(), 
-					entity.getUser(), entity.getName(), entity.getAmount());
+					entity.getUser(), entity.getName(), entity.getAmount(),
+					Status.NEW);
 			dtoList.add(newDto);
 		}
 		return dtoList;

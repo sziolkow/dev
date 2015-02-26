@@ -5,11 +5,11 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   version="2.5">
   <servlet>
-    <servlet-name>CreateNewTodo</servlet-name>
+    <servlet-name>CreateNewArticle</servlet-name>
     <servlet-class>org.home.gae.shopping.controlers.ServletCreateArticle</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CreateNewTodo</servlet-name>
+    <servlet-name>CreateNewArticle</servlet-name>
     <url-pattern>/new</url-pattern>
   </servlet-mapping>
   <servlet>

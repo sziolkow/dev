@@ -14,12 +14,22 @@ public class Article {
 	private String user;
 	private String name;
 	private int amount;
+	private String status;
 	
-	public Article(String user, String name, int amount) {
+	public Article(String user, String name, int amount, String status) {
 		super();
 		this.user = user;
 		this.name = name;
 		this.amount = amount;
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getUser() {

@@ -1,6 +1,9 @@
 package org.home.gae.shopping.model;
 
 import java.io.Serializable;
+import org.home.gae.common.Status;
+
+
 
 public class ArticleDTO implements Serializable {
 	
@@ -13,12 +16,22 @@ public class ArticleDTO implements Serializable {
 	private String user;
 	private String name;
 	private int amount;
+	private Status status;
 	
-	public ArticleDTO(Long id, String user, String name, int amount) {
+	public ArticleDTO(Long id, String user, String name, int amount, Status status) {
 		this.id = id;
 		this.user = user;
 		this.name = name;
 		this.amount = amount;
+		this.status = status;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public void setId(Long id) {

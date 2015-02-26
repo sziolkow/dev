@@ -86,8 +86,8 @@
 	    urlLinktext = "Wyloguj";
 	    articles = (List<ArticleDTO>)request.getSession().getAttribute("articles");
 	    ServletContext context = request.getSession().getServletContext();
-	    String attribute =(String)context.getAttribute("admin");
-	    if((attribute != null) && (attribute.equals(user.getUserId()))) {
+	    Boolean adminUser =(Boolean)request.getSession().getAttribute("admin");
+	    if((adminUser!= null) && (adminUser.booleanValue()==true)) {
 	    	isAdmin = true;
 	    }
 	}
@@ -165,14 +165,18 @@
     <div class="col-md-6">
 	        <table class="table table-striped"">
 	        <tr>
+	          <th>User ID</th>
 	          <th>Nazwa</th>
 	          <th>Ilosc</th>
+	          <th>Status</th>
 	          <th>&nbsp;</th>
 	        </tr>
 	  		<% for (ArticleDTO article : articles) {%>
 				<tr> 
+				    <td><%=article.getUser()%></td>
 					<td><%=article.getName()%></td>
 					<td><%=article.getAmount()%></td>
+					<td><%=article.getStatus()%></td>
 					<td><a class="done" href="/done?id=<%=article.getId()%>" >Delete</a></td>
 				</tr> 
 			<%}%>
